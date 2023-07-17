@@ -5,9 +5,19 @@ from django.shortcuts import render
 
 def index_contacts(request):
     context = {'header': 'это header contacts/views.py'}
-    return render(request, 'contacts/contacts.html', context)
+    return render(request, 'catalog/contacts.html', context)
 
 
 def index_home(request):
     # context = {'header': 'это header contacts/views.py'}
-    return render(request, 'home/home.html')
+    return render(request, 'catalog/home.html')
+
+
+def index_home2(request):
+    # context = {'header': 'это header contacts/views.py'}
+    return render(request, 'home/catalog.html')
+
+
+# def index_main(request):
+#     # context = {'header': 'это header contacts/views.py'}
+#     return render(request, 'catalog/index.html')

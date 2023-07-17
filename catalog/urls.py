@@ -1,10 +1,12 @@
 
-from django.urls import path, include
-# from django.shortcuts import render
+
 from . import views
-from catalog.views import index_home
+from django.urls import path
+
 
 urlpatterns = [
-    path('', views.index_contacts, name='index'),
-    path('', include('catalog.urls')),
+    path('', views.index_home),
+    path('contacts/', views.index_contacts),
+    path('home/', views.index_home),
+
 ]
