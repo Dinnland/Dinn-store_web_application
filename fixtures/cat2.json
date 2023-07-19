@@ -1,0 +1,17 @@
+[{
+  "model": "catalog.category",
+  "pk": null,
+  "fields": {
+    "name": "Ноутбуки",
+    "description": "переносной компьютер, в корпусе которого объединены типичные компоненты персонального компьютера"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": null,
+  "fields": {
+    "name": "Мониторы",
+    "description": "показывает изображение "
+  }
+}
+  ]

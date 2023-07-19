@@ -32,6 +32,9 @@ class Category(models.Model):
     def __int__(self):
         return f'{self.name} {self.description}'
 
+    def __str__(self):
+        return f'{self.name} '
+
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'

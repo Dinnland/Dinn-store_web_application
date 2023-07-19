@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-# Create your views here.
+# Create your views here. контроллеры
 
 
 def index_contacts(request):
@@ -15,7 +15,7 @@ def index_home(request):
 
 def index_home2(request):
     # context = {'header': 'это header contacts/views.py'}
-    return render(request, 'home/catalog.html')
+    return render(request, 'catalog/home2.html')
 
 
 # def index_main(request):
