@@ -1,0 +1,28 @@
+[
+{
+  "model": "catalog.product",
+  "pk": null,
+  "fields": {
+    "name": "MSI GF66 Katana белый",
+    "description": "Ноутбук MSI GF66 Katana разработан для геймеров с высокими требованиями к производительности.",
+    "image": "",
+    "category": null,
+    "price": 108000.0,
+    "date_of_create": "2023-07-18T20:08:08Z",
+    "date_of_change": "2023-07-18T20:08:10Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": null,
+  "fields": {
+    "name": "Монитор Sony (SONY) INZONE M9 27",
+    "description": "27-дюймовый высококлассный игровой монитор 4K 4K 144 Гц / полная подсветка HDR600 HDMI 2.1, черный",
+    "image": "",
+    "category": null,
+    "price": 130000.0,
+    "date_of_create": "2023-07-18T20:28:15Z",
+    "date_of_change": "2023-07-18T20:28:16Z"
+  }
+}
+]
