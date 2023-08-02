@@ -15,7 +15,10 @@ urlpatterns = [
     path('home/', ProductListView.as_view(extra_context={'title': 'Dinnstore'}), name='home'),
     path('contacts/', index_contacts, name='contacts'),
     path('base/', base),
-    path('view/<int:pk>', ProductDetailView.as_view(), name='home'),
+    path('view/<int:pk>', ProductDetailView.as_view(), name='view'),
+    path('createproduct/', ProductCreateView.as_view(), name='create_product'),
+    path('updateproduct/<int:pk>/', ProductUpdateView.as_view(), name='update_product'),
+    path('deleteproduct/<int:pk>/', ProductDeleteView.as_view(), name='delete_product'),
 
     path('createblog/', BlogCreateView.as_view(), name='createblog'),
     path('blog/', BlogListView.as_view(extra_context={'title': 'Dinnstore'}), name='listblog'),

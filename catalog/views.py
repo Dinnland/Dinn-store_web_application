@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
 from pytils.translit import slugify
 
+from catalog.forms import *
 from catalog.models import Product, Blog
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
@@ -21,10 +22,14 @@ def base(request):
     context = {'title': 'Dinnland'}
     return render(request, 'catalog/base.html', context)
 
-# def baseret(base):
-#     """ Базовый шаблон с меню, футером и тд """
-#     context = base.context
-#     return context
+
+def index_contacts(request):
+    """Стр с контактами"""
+    context = {
+        'header': 'Контакты'
+               }
+    return render(request, 'catalog/contacts.html', context)
+
 
 class ProductListView(ListView):
     """Главная стр с продуктами"""
@@ -38,12 +43,26 @@ class ProductDetailView(DetailView):
     template_name = 'catalog/product_detail.html'
 
 
-def index_contacts(request):
-    """Стр с контактами"""
-    context = {
-        'header': 'Контакты'
-               }
-    return render(request, 'catalog/contacts.html', context)
+class ProductCreateView(CreateView):
+    """страница для создания продукта"""
+    model = Product
+    form_class = ProductCreateForm
+    success_url = reverse_lazy('catalog:home')
+
+
+class ProductUpdateView(UpdateView):
+    """страница для Изменения продукта"""
+    model = Product
+    form_class = ProductUpdateForm
+    success_url = reverse_lazy('catalog:home')
+
+
+class ProductDeleteView(DeleteView):
+    """страница для удаления блога"""
+    model = Product
+    # fields = ('__all__')
+    # fields = ('header', 'content', 'image')
+    success_url = reverse_lazy('catalog:home')
 
 
 # Блог

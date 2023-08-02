@@ -1,19 +1,20 @@
 from django.db import models
+from catalog.validators import *
 
 # Create your models here.
 NULLABLE = {'null': True, 'blank': True}
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=100, verbose_name='наименование продукта')
-    description = models.CharField(max_length=1000, verbose_name='описание продукта')
+    name = models.CharField(max_length=100, verbose_name='наименование продукта', validators=[validate_forbidden_words])
+    description = models.CharField(max_length=1000, verbose_name='описание продукта', validators=[validate_forbidden_words])
     image = models.ImageField(upload_to='catalog/', verbose_name='изображение', **NULLABLE)
     category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True)
     # models.CASCADE: автоматически удаляет строку из зависимой таблицы, если удаляется связанная строка и главной таблицы
     # models.SET_NULL: устанавливает NULL при удалении связанной строка из главной таблицы
     price = models.FloatField(verbose_name='цена за покупку')
     date_of_create = models.DateTimeField(verbose_name='дата создания')
-    date_of_change = models.DateTimeField(verbose_name='дата последнего изменения')
+    date_of_change = models.DateTimeField(verbose_name='дата последнего изменения', **NULLABLE)
 
     def __int__(self):
         return f'{self.name} {self.description} {self.category} {self.price} {self.date_of_create} {self.date_of_change} '
