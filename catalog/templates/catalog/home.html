@@ -2,16 +2,14 @@
 {% load my_tags %}
 {% block context %}
 
-
-
-<div class="pricing-header px-3 py-3 pt-md-2 pb-md-4 mx-auto text-center">
-    <h1 class="display-4">{{ title }}</h1>
-    <p class="lead">{{ title }} - это отличный интернет-магазин
+    <div class="pricing-header px-3 py-3 pt-md-2 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">{{ title }}</h1>
+        <p class="lead">{{ title }} - это отличный интернет-магазин
         </p>
-<div class="col-12">
-    <a class="btn btn-outline-primary" href="{% url 'catalog:create_product' %}">Добавить продукт</a>
+        <div class="col-12">
+            <a class="btn btn-outline-primary" href="{% url 'catalog:create_product' %}">Добавить продукт</a>
+        </div>
     </div>
-</div>
     {% for object in object_list %}
         <div class="col-3">
 
@@ -19,14 +17,14 @@
                 <div class="card-header">
                     <h4 class="my-0 font-weight-normal">
                         <ul class="list-unstyled mt-2 mb-9 text-start m-1">
-{#                        <ul class="list-unstyled mt-3 mb-4 text-start m-3">#}
+                            {#                        <ul class="list-unstyled mt-3 mb-4 text-start m-3">#}
 
                             {{ object }}
 
                             <ul>
-                            <img class="card-img-top"
-                                src="{{ object.image|my_media }}"
-                                alt="Card image cap">
+                                <img class="card-img-top"
+                                     src="{{ object.image|my_media }}"
+                                     alt="Card image cap">
                             </ul>
                         </ul>
                     </h4>
@@ -38,11 +36,30 @@
                         {{ object.description|truncatechars:100 }}
                     </ul>
                     <div class="card mb-4 box-shadow">
-                    <a href="{% url 'catalog:view' object.pk %}" type="button" class="btn btn-lg btn-block btn-outline-primary md-1">Перейти</a>
-                    <a href="{% url 'catalog:update_product' object.pk %}" type="button" class="btn btn-lg btn-block btn-outline-primary md-1">Редактировать</a>
+                        <a href="{% url 'catalog:view' object.pk %}" type="button"
+                           class="btn btn-lg btn-block btn-outline-primary md-1">Перейти</a>
+                        <a href="{% url 'catalog:update_product' object.pk %}" type="button"
+                           class="btn btn-lg btn-block btn-outline-primary md-1">Редактировать</a>
                     </div>
                 </div>
+                <a class="card-title pricing-card-title">
 
+                    {% for version in object.product_versions.all %}
+                        {% if version %}
+                            {% if version.sign_of_current_version == True %}
+                                {#                        <b>Версия:</b>{{ version.version_name }}#}
+
+
+                                <b>Версия:</b>{{ version.version_name }}
+                                <b>Номер версии:</b>{{ version.version_number }}
+                                <b>Признак версии:</b>{{ version.sign_of_current_version }}
+                                </a>
+                            {% endif %}
+                        {% else %}
+
+                            <b>-- Не найдено версий для продукта --:</b>
+                        {% endif %}
+                    {% endfor %}
             </div>
         </div>
     {% endfor %}

@@ -101,7 +101,8 @@ DATABASES = {
         'NAME': 'catalog3',
         'USER': 'postgres',
         'PASSWORD': '9999',
-        'HOST': '127.0.0.1',
+        # 'HOST': '127.0.0.1',
+        'HOST': 'localhost',
         'PORT': 5432,
     }
 }
