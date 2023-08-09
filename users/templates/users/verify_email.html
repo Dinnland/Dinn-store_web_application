@@ -1,0 +1,37 @@
+{#{% extends 'catalog/base.html' %}#}
+{#{% load my_tags %}#}
+{#{% block context %}#}
+{#    <div class="col-12">#}
+{#        <form class="row" method="post" enctype="multipart/form-data">#}
+            {#    <form method="post" class="row">#}
+            {#        <div class="col-10 mx-auto text-center">#}
+{##}
+{#            <div class="col-6">#}
+{#                <div class="card">#}
+{#                    <div class="card-header">#}
+{#                        <h3 class="card-title">#}
+{#                            Сообщение с для завершения регистрации  отправлено на вашу почту#}
+{#                        </h3>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </form>#}
+{#    </div>#}
+{##}
+{#{% endblock %}#}
+
+{% autoescape off %}
+Здравствуйте, {{ user.get_username }},
+    Для подверждения регистрации, перейдите по ссылке:
+http://{{ domain }}{% url 'verifyemail' uidb64=uid token=token %}
+
+
+
+    {#{% endblock %}#}
+{#{% translate 'Your username, in case you’ve forgotten:' %} {{ user.get_username }}#}
+{##}
+{#{% translate "Thanks for using our site!" %}#}
+{##}
+{#{% blocktranslate %}The {{ site_name }} team{% endblocktranslate %}#}
+
+{% endautoescape %}
