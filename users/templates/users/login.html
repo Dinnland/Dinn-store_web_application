@@ -1,6 +1,6 @@
 {% extends 'catalog/base.html' %}
 {% load my_tags %}
-{% block context %}
+{% block content %}
     <div class="col-12">
         <form class="row" method="post" enctype="multipart/form-data">
             {#    <form method="post" class="row">#}
@@ -17,18 +17,14 @@
                         {% csrf_token %}
                         {{ form.as_p }}
                         <button type="submit" class="btn btn-success">Войти</button>
-                        {#                        {% if object %}#}
-                        {#                            Сохранить#}
-                        {#                        {% else %}#}
-                        {#                            Создать#}
-                        {#                        {% endif %}#}
-                        {#                    </button>#}
-                    </div>
 
+                    </div>
+                    <a class="card-footer">
+
+                        <a class="p-2 btn btn-outline-primary" href={% url 'users:password_reset' %}>Сбросить пароль</a>
+                    </a>
                 </div>
             </div>
-
-
         </form>
     </div>
 

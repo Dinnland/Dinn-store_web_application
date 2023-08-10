@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from email_secret_data import temp
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,6 +40,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,9 +48,24 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+
+    # 3rd party apps
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
+
+    # My apps
     'catalog',
     'users',
+
+    # '<app>.apps.<AppConfig>',
+
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -160,11 +177,13 @@ AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-EMAIL_HOST = 'smtp.mail.ru' #'sntp.yandex.ru'
-EMAIL_PORT = '2525' # 456
-EMAIL_HOST_USER = 'dinn.land@mail.ru'
-EMAIL_HOST_PASSWORD = 'u9PcngbLAu8SpiFqTmrm'
-# EMAIL_USE_SSL = True
+EMAIL_HOST = temp.EMAIL_HOST
+EMAIL_PORT = temp.EMAIL_PORT
+EMAIL_HOST_USER = temp.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = temp.EMAIL_HOST_PASSWORD
+
+# EMAIL_USE_TLS = temp.EMAIL_USE_TLS
+# EMAIL_USE_SSL = temp.EMAIL_USE_SSL
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 

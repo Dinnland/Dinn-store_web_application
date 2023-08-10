@@ -1,6 +1,6 @@
 {% extends 'catalog/base.html' %}
 {% load my_tags %}
-{% block context %}
+{% block content %}
 
     <div class="pricing-header px-3 py-3 pt-md-2 pb-md-4 mx-auto text-center">
         <h1 class="display-4">{{ title }}</h1>
@@ -42,24 +42,35 @@
                            class="btn btn-lg btn-block btn-outline-primary md-1">Редактировать</a>
                     </div>
                 </div>
-                <a class="card-title pricing-card-title">
+{#                <a class="card-title pricing-card-title">#}
+                <div class="card-body">
+                    <table class="table">
 
-                    {% for version in object.product_versions.all %}
-                        {% if version %}
-                            {% if version.sign_of_current_version == True %}
-                                {#                        <b>Версия:</b>{{ version.version_name }}#}
+                        {% for version in object.product_versions.all %}
+                            {% if version %}
+                                {% if version.sign_of_current_version == True %}
+                                    {#                        <b>Версия:</b>{{ version.version_name }}#}
+                                    <tr>
+                                        <td>Версия:</td>
+                                        <td>{{ version.version_name }}</td>
 
+                                    <tr>
+                                        <td>Номер версии:</td>
+                                        <td>{{ version.version_number }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Признак версии:</td>
+                                        <td>{{ version.sign_of_current_version }}</td>
+                                    </tr>
 
-                                <b>Версия:</b>{{ version.version_name }}
-                                <b>Номер версии:</b>{{ version.version_number }}
-                                <b>Признак версии:</b>{{ version.sign_of_current_version }}
-                                </a>
+                                {% endif %}
+                            {% else %}
+
+                                <b>-- Не найдено версий для продукта --:</b>
                             {% endif %}
-                        {% else %}
-
-                            <b>-- Не найдено версий для продукта --:</b>
-                        {% endif %}
-                    {% endfor %}
+                        {% endfor %}</table>
+{#                </a>#}
+                </div>
             </div>
         </div>
     {% endfor %}

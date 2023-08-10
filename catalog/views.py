@@ -135,6 +135,10 @@ class BlogDetailView(DetailView):
         self.object.save()
         return self.object
 
+    def get_success_url(self):
+        return reverse('catalog:viewblog', args=[self.kwargs.get('pk')])
+
+
 
 class BlogUpdateView(UpdateView):
     """страница для Изменения блога"""
