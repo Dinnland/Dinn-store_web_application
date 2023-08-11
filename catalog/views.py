@@ -1,9 +1,12 @@
+from django.contrib.messages.views import SuccessMessageMixin
 from django.forms import inlineformset_factory
 from django.shortcuts import render, get_object_or_404
 from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 from pytils.translit import slugify
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from catalog.forms import *
 from catalog.models import *
@@ -33,30 +36,59 @@ def index_contacts(request):
     return render(request, 'catalog/contacts.html', context)
 
 
-class ProductListView(ListView):
+class ProductListView(LoginRequiredMixin, ListView):
     """Главная стр с продуктами"""
     model = Product
     template_name = 'catalog/home.html'
 
+    # ограничение доступа анонимных пользователей
+    # 19 Уведомление для неавторизованных пользователей
+    login_url = 'catalog:not_authenticated'
 
-class ProductDetailView(DetailView):
+
+class ProductDetailView(LoginRequiredMixin, DetailView):
     """ стр с продуктами"""
     model = Product
     template_name = 'catalog/product_detail.html'
 
+    # ограничение доступа анонимных пользователей
+    # 19 Уведомление для неавторизованных пользователей
+    login_url = 'catalog:not_authenticated'
 
-class ProductCreateView(CreateView):
+
+class ProductCreateView(LoginRequiredMixin, CreateView):
     """страница для создания продукта"""
     model = Product
     form_class = ProductCreateForm
     success_url = reverse_lazy('catalog:home')
 
+    # ограничение доступа анонимных пользователей
+    # 19 Уведомление для неавторизованных пользователей
+    login_url = 'catalog:not_authenticated'
 
-class ProductUpdateView(UpdateView):
+    permission_classes = (IsAuthenticated,)
+
+    def form_valid(self, form):
+        self.object = form.save()
+        self.object.owner = self.request.user
+        self.object.save()
+
+        return super().form_valid(form)
+
+
+class ProductUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     """страница для Изменения продукта"""
     model = Product
     form_class = ProductUpdateForm
     # success_url = reverse_lazy('catalog:home')
+
+    # ограничение доступа анонимных пользователей
+    # 19 Уведомление для неавторизованных пользователей
+    login_url = 'catalog:not_authenticated'
+
+    # # Уведомление об обновлении продукта
+    # login_url = 'catalog:update_product'
+    # success_message = 'Материал был успешно обновлен'
 
     def get_success_url(self):
         return reverse('catalog:update_product', args=[self.kwargs.get('pk')])
@@ -84,12 +116,16 @@ class ProductUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     """страница для удаления Product"""
     model = Product
     # fields = ('__all__')
     # fields = ('header', 'content', 'image')
     success_url = reverse_lazy('catalog:home')
+
+    # ограничение доступа анонимных пользователей
+    # 19 Уведомление для неавторизованных пользователей
+    login_url = 'catalog:not_authenticated'
 
 
 # Блог
@@ -165,4 +201,11 @@ class BlogDeleteView(DeleteView):
     # fields = ('__all__')
     # fields = ('header', 'content', 'image')
     success_url = reverse_lazy('catalog:listblog')
+
+
+class Not_authenticated(ListView):
+    """Главная стр с продуктами"""
+    model = Product
+    template_name = 'catalog/not_authenticated.html'
+
 

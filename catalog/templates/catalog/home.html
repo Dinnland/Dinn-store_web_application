@@ -45,7 +45,8 @@
 {#                <a class="card-title pricing-card-title">#}
                 <div class="card-body">
                     <table class="table">
-
+                        <a >Создатель: {{ object.owner|default:'Создателя нет'}}</a>
+<hr>
                         {% for version in object.product_versions.all %}
                             {% if version %}
                                 {% if version.sign_of_current_version == True %}
@@ -53,7 +54,7 @@
                                     <tr>
                                         <td>Версия:</td>
                                         <td>{{ version.version_name }}</td>
-
+                                    </tr>
                                     <tr>
                                         <td>Номер версии:</td>
                                         <td>{{ version.version_number }}</td>

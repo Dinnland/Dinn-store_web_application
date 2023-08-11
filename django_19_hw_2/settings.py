@@ -36,7 +36,6 @@ ALLOWED_HOSTS = [
 ]
 
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -77,13 +76,17 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# MIDDLEWARE_CLASSES = (
+#
+#     'django_19_hw_2.users.middleware',
+# )
+
 ROOT_URLCONF = 'django_19_hw_2.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

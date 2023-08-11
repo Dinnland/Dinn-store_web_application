@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from catalog.validators import *
 
@@ -19,6 +20,7 @@ class Product(models.Model):
     date_of_create = models.DateTimeField(verbose_name='дата создания')
     date_of_change = models.DateTimeField(verbose_name='дата последнего изменения', **NULLABLE)
     # sign_of_current_version = models.BooleanField(default=True, verbose_name='признак текущей версии', **NULLABLE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE, verbose_name='Владелец')
 
 
     def __int__(self):

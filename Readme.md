@@ -9,9 +9,9 @@
 
 2. ### Ввести в файл '.env' данные вашей почты.
    (При необходимости введите данные в нужном виде прямо в файл 'django_19_hw_2/settings.py' )
-     Пример для mail.ru: ###
+   Пример для mail.ru: 
 
-    EMAIL_HOST = 'smtp.mail.ru' 
-    EMAIL_PORT = '2525' 
-    EMAIL_HOST_USER = 'dinn.land@mail.ru' 
-    EMAIL_HOST_PASSWORD = 'passwordpassword'
+   EMAIL_HOST = 'smtp.mail.ru'
+   EMAIL_PORT = '2525' 
+   EMAIL_HOST_USER = 'dinn.land@mail.ru' 
+   EMAIL_HOST_PASSWORD = 'passwordpassword'
