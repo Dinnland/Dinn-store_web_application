@@ -1,8 +1,10 @@
 {% extends 'catalog/base.html' %}
 {% load my_tags %}
+{% load static %}
 {% block content %}
 
     <div class="pricing-header px-3 py-3 pt-md-2 pb-md-4 mx-auto text-center">
+        {#        {% include 'catalog/includes/messages.html' %}#}
         <h1 class="display-4">{{ title }}</h1>
         <p class="lead">{{ title }} - это отличный интернет-магазин
         </p>
@@ -10,22 +12,27 @@
             <a class="btn btn-outline-primary" href="{% url 'catalog:create_product' %}">Добавить продукт</a>
         </div>
     </div>
+
     {% for object in object_list %}
         <div class="col-3">
+            {#        <div class="container">#}
 
-            <div class="card mb-4 box-shadow">
+            {##}
+            {#                                    <div class="row row-flex">#}
+            <div class="card md-4    box-shadow ">
+                {#                            <div class="card md-4 col-sm-4 col-xs-12 box-shadow">#}
+
+                {#            <div class="card mb-4 box-shadow">#}
                 <div class="card-header">
                     <h4 class="my-0 font-weight-normal">
                         <ul class="list-unstyled mt-2 mb-9 text-start m-1">
-                            {#                        <ul class="list-unstyled mt-3 mb-4 text-start m-3">#}
-
                             {{ object }}
-
                             <ul>
                                 <img class="card-img-top"
                                      src="{{ object.image|my_media }}"
                                      alt="Card image cap">
                             </ul>
+                            {#                            {{ object }}#}
                         </ul>
                     </h4>
                 </div>
@@ -39,40 +46,43 @@
                         <a href="{% url 'catalog:view' object.pk %}" type="button"
                            class="btn btn-lg btn-block btn-outline-primary md-1">Перейти</a>
                         <a href="{% url 'catalog:update_product' object.pk %}" type="button"
+                                {#                           проверка доступа#}
+                                {% if perms.catalog.change_product %}
                            class="btn btn-lg btn-block btn-outline-primary md-1">Редактировать</a>
+                                {% endif %}
+                        {% if perms.catalog.delete_product %}
+                            <a href="{% url 'catalog:delete_product' object.pk %}" type="button"
+                               class="btn btn-lg btn-block btn-outline-primary md-1">Удалить</a>
+                        {% endif %}
                     </div>
                 </div>
-{#                <a class="card-title pricing-card-title">#}
-                <div class="card-body">
-                    <table class="table">
-                        <a >Создатель: {{ object.owner|default:'Создателя нет'}}</a>
-<hr>
-                        {% for version in object.product_versions.all %}
-                            {% if version %}
-                                {% if version.sign_of_current_version == True %}
-                                    {#                        <b>Версия:</b>{{ version.version_name }}#}
-                                    <tr>
-                                        <td>Версия:</td>
-                                        <td>{{ version.version_name }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Номер версии:</td>
-                                        <td>{{ version.version_number }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Признак версии:</td>
-                                        <td>{{ version.sign_of_current_version }}</td>
-                                    </tr>
+                {#                <div class="card-body">#}
+                <div class="card-title pricing-card-title">
+                    <div class="card-body">
+                        <table class="table">
+                            <a>Создатель: {{ object.owner|default:'Создателя нет' }}</a>
+                            <hr>
+                            {% for version in object.product_versions.all %}
+                                {% if version %}
+                                    {% if version.sign_of_current_version == True %}
 
+                                        <a>Версия: {{ version.version_name }}</a><br/>
+                                        <a>Номер версии: {{ version.version_number }}</a><br/>
+                                        <p>Признак версии: {{ version.sign_of_current_version }}</p><br/>
+                                    {% else %}
+                                        <b>нет актив</b>
+                                    {% endif %}
+                                {% else %}
+
+                                    <b>-- Не найдено версий для продукта --:</b>
                                 {% endif %}
-                            {% else %}
+                            {% endfor %}
+                        </table>
+                    </div>
 
-                                <b>-- Не найдено версий для продукта --:</b>
-                            {% endif %}
-                        {% endfor %}</table>
-{#                </a>#}
                 </div>
             </div>
         </div>
+
     {% endfor %}
 {% endblock %}

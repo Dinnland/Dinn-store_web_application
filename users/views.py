@@ -3,6 +3,7 @@ import random
 from django.conf import settings
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView
 from django.contrib.messages.views import SuccessMessageMixin
@@ -47,9 +48,9 @@ from users.models import User
 #         return super().form_valid(form)
 #
 #     # , redirect('confirm_email'
+# LoginRequiredMixin,
 
-
-class ProfileView(UpdateView):
+class ProfileView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserProfileForm
     # template_name = 'users/register.html'

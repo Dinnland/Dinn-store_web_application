@@ -1,0 +1,13 @@
+{% extends "catalog/base.html" %}
+
+{% block content %}
+<div class="alert alert-info" role="alert">
+    <h4 class="alert-heading">Недостаточно прав!</h4>
+    <p>
+        У вас Недостаточно прав для взаимодействия с объектом !
+    </p>
+            <a class="p-2 btn btn-outline-primary" href={% url 'catalog:home' %}>Каталог</a>
+{#            <a class="p-2 btn btn-outline-primary" href={% url 'users:register' %}>Регистрация</a>#}
+</div>
+{% endblock %}
+

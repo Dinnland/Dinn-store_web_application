@@ -24,6 +24,12 @@ class ProductUpdateForm(StyleFormMixin, forms.ModelForm):
         fields = ('name', 'description', 'image', 'category', 'price', 'date_of_change')
         # exclude =
 
+class ProductUpdateFormModerator(StyleFormMixin, forms.ModelForm):
+    class Meta:
+        model = Product
+        # fields = '__all__'
+        fields = ('sign_of_publication', 'description', 'category',)
+
 
 class VersionForm(StyleFormMixin, forms.ModelForm):
     class Meta:

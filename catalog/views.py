@@ -1,13 +1,16 @@
+from django.contrib.auth.decorators import permission_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.forms import inlineformset_factory
+from django.http import request, Http404
 from django.shortcuts import render, get_object_or_404
 from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 from pytils.translit import slugify
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
+from django.contrib.auth.models import User, Group
 from catalog.forms import *
 from catalog.models import *
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -36,7 +39,8 @@ def index_contacts(request):
     return render(request, 'catalog/contacts.html', context)
 
 
-class ProductListView(LoginRequiredMixin, ListView):
+# @permission_required('')
+class ProductListView(LoginRequiredMixin,  ListView):
     """Главная стр с продуктами"""
     model = Product
     template_name = 'catalog/home.html'
@@ -44,6 +48,12 @@ class ProductListView(LoginRequiredMixin, ListView):
     # ограничение доступа анонимных пользователей
     # 19 Уведомление для неавторизованных пользователей
     login_url = 'catalog:not_authenticated'
+    # PermissionRequiredMixin,
+    # permission_required = 'catalog.'
+
+    # def get_queryset(self):
+    #     """показывает продукты, которые созданы владельцем-юзером"""
+    #     return super().get_queryset().filter(owner=self.request.user)
 
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
@@ -53,6 +63,7 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
 
     # ограничение доступа анонимных пользователей
     # 19 Уведомление для неавторизованных пользователей
+    # можно login_url = 'catalog:not_authenticated' прописать в settings, и не вставлять тут
     login_url = 'catalog:not_authenticated'
 
 
@@ -76,34 +87,59 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ProductUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class ProductUpdateView(LoginRequiredMixin, SuccessMessageMixin, PermissionRequiredMixin, UpdateView):
     """страница для Изменения продукта"""
     model = Product
-    form_class = ProductUpdateForm
-    # success_url = reverse_lazy('catalog:home')
+    # gr = request.user.groups.values_list('name', flat=False)
+
+    def get_form_class(self, queryset=None):
+        """Тут в зависимости от группы юзера выводятся разные формы продукта"""
+        self.object = super().get_object(queryset)
+        # if self.object.owner == self.request.user:
+
+        if self.request.user.groups.filter(name='moderator').exists():
+            form_class = ProductUpdateFormModerator
+            return form_class
+        else:
+            form_class = ProductUpdateForm
+            return form_class
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        if self.object.owner == self.request.user:
+            # return redirect('catalog:no_rights')
+            raise Http404
+        else:
+            return self.object
 
     # ограничение доступа анонимных пользователей
     # 19 Уведомление для неавторизованных пользователей
     login_url = 'catalog:not_authenticated'
+    permission_required = 'catalog.change_product'
 
     # # Уведомление об обновлении продукта
     # login_url = 'catalog:update_product'
-    # success_message = 'Материал был успешно обновлен'
+    success_message = 'Материал был успешно обновлен'
 
     def get_success_url(self):
         return reverse('catalog:update_product', args=[self.kwargs.get('pk')])
 
-    def get_context_data(self,  **kwargs):
-
+    def get_context_data(self,  queryset=None, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        version_formset = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
-        if self.request.method == 'POST':
-            context_data['formset'] = version_formset(self.request.POST, instance=self.object)
-        else:
-            context_data['formset'] = version_formset(instance=self.object)
-        #-----------instance=self.object - для редакт, для созд не надо
-
+        self.object = super().get_object(queryset)
+        # Тут ТУПО убираем для 'moderator' версии продукта из видимости
+        if not self.request.user.groups.filter(name='moderator').exists():
+            # context_data = super().get_context_data(**kwargs)
+            version_formset = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
+            if self.request.method == 'POST':
+                context_data['formset'] = version_formset(self.request.POST, instance=self.object)
+                # return context_data
+            else:
+                context_data['formset'] = version_formset(instance=self.object)
+                # return context_data
+            #-----------instance=self.object - для редакт, для созд не надо
         return context_data
+
 
     def form_valid(self, form):
 
@@ -116,7 +152,7 @@ class ProductUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return super().form_valid(form)
 
 
-class ProductDeleteView(LoginRequiredMixin, DeleteView):
+class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     """страница для удаления Product"""
     model = Product
     # fields = ('__all__')
@@ -126,7 +162,8 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
     # ограничение доступа анонимных пользователей
     # 19 Уведомление для неавторизованных пользователей
     login_url = 'catalog:not_authenticated'
-
+    permission_required = 'catalog.delete_product'
+    success_message = 'Материал был успешно Удален'
 
 # Блог
 class BlogCreateView(CreateView):
@@ -202,10 +239,13 @@ class BlogDeleteView(DeleteView):
     # fields = ('header', 'content', 'image')
     success_url = reverse_lazy('catalog:listblog')
 
-
-class Not_authenticated(ListView):
-    """Главная стр с продуктами"""
+class NotAuthenticated(ListView):
+    """not_authenticated"""
     model = Product
     template_name = 'catalog/not_authenticated.html'
 
+class NoRights(ListView):
+    """NoRights"""
+    model = Product
+    template_name = 'catalog/no_rights.html'
 

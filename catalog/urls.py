@@ -26,7 +26,8 @@ urlpatterns = [
     path('editblog/<int:pk>/', BlogUpdateView.as_view(), name='editblog'),
     path('deleteblog/<int:pk>/', BlogDeleteView.as_view(), name='deleteblog'),
 
-    path('not_authenticated/', Not_authenticated.as_view(extra_context={'title': 'Dinnstore'}), name='not_authenticated'),
+    path('not_authenticated/', NotAuthenticated.as_view(extra_context={'title': 'Dinnstore'}), name='not_authenticated'),
+    path('no_rights/', NoRights.as_view(extra_context={'title': 'Dinnstore'}), name='no_rights'),
 
 
 ]

@@ -4,8 +4,11 @@
 {% block content %}
     {#    <form method="post" enctype="multipart/form-data">#}
     <form method="post" class="row">
+        {# Тут уведомление "Материал был успешно обновлен"#}
+        {% include 'catalog/includes/messages.html' %}
         {#        <div class="col-10 mx-auto text-center">#}
         <div class="col-6">
+        <a>{{ user.groups.all.first }}</a>
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">
@@ -47,10 +50,6 @@
                     </div>
                 </div>
             </div>
-{#        Тут можно уведомление потом настроить#}
-        {% include 'catalog/includes/messages.html' %}
         </div>
-
     </form>
-
 {% endblock %}

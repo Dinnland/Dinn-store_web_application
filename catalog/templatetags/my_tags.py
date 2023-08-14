@@ -11,5 +11,5 @@ def my_media(val):
     if val:
         return f'/media/{val}'
     else:
-        return '/media/catalog/sad_cat.png'
+        return '/media/catalog/dinn_logo_white.png'
 
