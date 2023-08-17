@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import permission_required
 from django.contrib.messages.views import SuccessMessageMixin
+from django.core.cache import cache
 from django.forms import inlineformset_factory
 from django.http import request, Http404
 from django.shortcuts import render, get_object_or_404
@@ -15,7 +16,7 @@ from catalog.forms import *
 from catalog.models import *
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
-
+from catalog.services import *
 # Create your views here. контроллеры
 
 
@@ -57,14 +58,31 @@ class ProductListView(LoginRequiredMixin,  ListView):
 
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
-    """ стр с продуктами"""
+    """ стр с продуктом"""
     model = Product
     template_name = 'catalog/product_detail.html'
 
-    # ограничение доступа анонимных пользователей
-    # 19 Уведомление для неавторизованных пользователей
-    # можно login_url = 'catalog:not_authenticated' прописать в settings, и не вставлять тут
-    login_url = 'catalog:not_authenticated'
+    def get_context_data(self, **kwargs):
+        """КЭШирование для вывода версий"""
+        context_data = super().get_context_data(**kwargs)
+        if settings.CACHE_ENABLED:
+            key = f'version_list_{self.object.pk}'
+            version_list = cache.get(key)
+            if version_list is None:
+                version_list = self.object.product_versions.all()
+                cache.set(key, version_list)
+        else:
+            version_list = self.object.product_versions.all()
+        context_data['versions'] = version_list
+        return context_data
+
+
+        # # # # # # # # # # # # # # # # # # # # # #
+        # context_data = super().get_context_data(**kwargs)
+        # version_listt = self.object.product_versions.all()
+        # key = f'version_list_{self.object.pk}'
+        # pk = self.object.pk
+        # context_data['versions'] = get_cashed_versions_for_product(object_pk=self.object.pk)
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
@@ -86,6 +104,14 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 
         return super().form_valid(form)
 
+    # def get_context_data(self, **kwargs):
+    #     context_data = super().get_context_data(**kwargs)
+    #     # version_listt = self.object.product_versions.all()
+    #     # key = f'version_list_{self.object.pk}'
+    #     # pk = self.object.pk
+    #     context_data['categoryes'] = get_cashed_categories_for_product(self.object.pk)
+
+
 
 class ProductUpdateView(LoginRequiredMixin, SuccessMessageMixin, PermissionRequiredMixin, UpdateView):
     """страница для Изменения продукта"""
@@ -105,9 +131,10 @@ class ProductUpdateView(LoginRequiredMixin, SuccessMessageMixin, PermissionRequi
             return form_class
 
     def get_object(self, queryset=None):
+        """проверка: владелец ли хочет редактнуть объект"""
         self.object = super().get_object(queryset)
-        if self.object.owner == self.request.user:
-            # return redirect('catalog:no_rights')
+        if self.object.owner != self.request.user:
+            # return  redirect(reverse('catalog:no_rights'))
             raise Http404
         else:
             return self.object
@@ -139,7 +166,6 @@ class ProductUpdateView(LoginRequiredMixin, SuccessMessageMixin, PermissionRequi
                 # return context_data
             #-----------instance=self.object - для редакт, для созд не надо
         return context_data
-
 
     def form_valid(self, form):
 
@@ -212,7 +238,6 @@ class BlogDetailView(DetailView):
         return reverse('catalog:viewblog', args=[self.kwargs.get('pk')])
 
 
-
 class BlogUpdateView(UpdateView):
     """страница для Изменения блога"""
     model = Blog
@@ -239,10 +264,12 @@ class BlogDeleteView(DeleteView):
     # fields = ('header', 'content', 'image')
     success_url = reverse_lazy('catalog:listblog')
 
+
 class NotAuthenticated(ListView):
     """not_authenticated"""
     model = Product
     template_name = 'catalog/not_authenticated.html'
+
 
 class NoRights(ListView):
     """NoRights"""

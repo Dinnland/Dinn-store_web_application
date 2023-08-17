@@ -1,0 +1,337 @@
+[
+{
+  "model": "catalog.product",
+  "pk": 2,
+  "fields": {
+    "name": "MSI GF66 Katanаa 11UE-406RU черный",
+    "description": "Ноутбук MSI GF66 Katana 11UE-406RU разработан для геймеров с высокими требованиями к производительности.tg",
+    "image": "",
+    "category": 8,
+    "price": 108000.0,
+    "date_of_create": "2023-07-18T20:08:08Z",
+    "date_of_change": "2023-07-18T20:08:10Z",
+    "owner": null,
+    "sign_of_publication": false
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 6,
+  "fields": {
+    "name": "MSI GF66 Katana белый",
+    "description": "Ноутбук MSI GF66 Katana разработан для геймеров с высокими требованиями к производительности.",
+    "image": "",
+    "category": 8,
+    "price": 108000.0,
+    "date_of_create": "2023-07-18T20:08:08Z",
+    "date_of_change": "2023-07-18T20:08:10Z",
+    "owner": null,
+    "sign_of_publication": false
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 7,
+  "fields": {
+    "name": "Монитор Sony (SONY) INZONE M9 27",
+    "description": "27-дюймовый высококлассный игровой монитор 4K 4K 144 Гц / полная подсветка HDR600 HDMI 2.1, черный",
+    "image": "",
+    "category": 9,
+    "price": 130000.0,
+    "date_of_create": "2023-07-18T20:28:15Z",
+    "date_of_change": "2023-07-18T20:28:16Z",
+    "owner": null,
+    "sign_of_publication": false
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 8,
+  "fields": {
+    "name": "6.7 Смартфон Apple iPhone 14 2Pro Max 256 ГБ фиолетовый",
+    "description": "У Apple iPhone 14 Prod Max 6,7-дюймовая панель. Пиковая яркость — 2000 нит. Используется небольшой вырез с датчиком фронтальной камеры и системой Face ID. Кроме того, он способен визуально уменьшаться и увеличиваться. Предусмотрен режим Always-on Display (экран всегда включен).Аппаратная основа — A16 Bionic. Это 4-нм SoC с производительным GPU и дополнительным процессором Image Signal Proccessor для повышения качества снимков.Тыльная камера iPhone 14 Pro Max тройная, на 48, 12 и 12 Мп. Ночью iPhone 14 Pro Max снимает в два раза лучше, чем iPhone 13 Pro. Селфи-камера на 12 Мп.",
+    "image": "catalog/iphone_14_pro.png",
+    "category": 8,
+    "price": 137099.0,
+    "date_of_create": "2023-07-21T20:08:08Z",
+    "date_of_change": "2023-07-21T20:08:10Z",
+    "owner": null,
+    "sign_of_publication": true
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 9,
+  "fields": {
+    "name": "Смартфон Xiaomi Redmi Note 12 Pro+ 256 ГБ черный",
+    "description": "Наслаждаться молниеносной загрузкой приложений и навигацией между окнами вы начнете со смартфоном Xiaomi Redmi Note 12 Pro+. Подобные возможности обусловлены вычислительной мощностью, которая состоит из 8-ядерного процессора и 8 ГБ оперативной памяти. AMOLED-технология способствует охвату широкой гаммы оттенков и демонстрации насыщенных цветов. Частота обновления 120 Гц гарантирует отсутствие смазанных кадров при быстрой смене сцен.\nСмартфон Xiaomi Redmi Note 12 Pro+ с объемом встроенной памяти 256 ГБ удивит наличием расширенной акустической системы. Поддержка Dolby Atmos обеспечит наполнение пространства многомерным звуком. Трехмодульная оптика сделает снимки ярче при слабом освещении, не допустит эффекта размытия и настроит резкость для конкретного участка. Процесс верификации пользователя происходит при участии сканера лица и отпечатка пальцев",
+    "image": "",
+    "category": 6,
+    "price": 36999.0,
+    "date_of_create": "2023-07-21T20:28:15Z",
+    "date_of_change": "2023-07-21T20:28:16Z",
+    "owner": null,
+    "sign_of_publication": false
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 18,
+  "fields": {
+    "name": "weqweпе",
+    "description": "wqeqwe",
+    "image": "",
+    "category": 7,
+    "price": 12.0,
+    "date_of_create": "2023-08-05T21:00:00Z",
+    "date_of_change": null,
+    "owner": 33,
+    "sign_of_publication": false
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 22,
+  "fields": {
+    "name": "qqqqqqqqqqqqqqqqqqqwqqq",
+    "description": "qqqqqqqqqqqqqqqqqqq",
+    "image": "",
+    "category": 9,
+    "price": 1131.0,
+    "date_of_create": "2023-08-01T21:00:00Z",
+    "date_of_change": null,
+    "owner": 3,
+    "sign_of_publication": false
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 5,
+  "fields": {
+    "name": "Видеонаблюдение",
+    "description": "устройство, предназначенное для записи, хранения и воспроизведения видеоинформации"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 6,
+  "fields": {
+    "name": "Смартфоны",
+    "description": " мобильный телефон, дополненный функциональностью умного устройства"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 7,
+  "fields": {
+    "name": "Телевизоры",
+    "description": "приёмник телевизионных сигналов изображения и звука, отображающий их на экране и с помощью динамиков"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 8,
+  "fields": {
+    "name": "Ноутбуки",
+    "description": "переносной компьютер, в корпусе которого объединены типичные компоненты персонального компьютера"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 9,
+  "fields": {
+    "name": "Мониторы",
+    "description": "показывает изображение "
+  }
+},
+{
+  "model": "catalog.blog",
+  "pk": 7,
+  "fields": {
+    "header": "изменил",
+    "slug": "x",
+    "content": "изменено",
+    "image": "",
+    "date_of_create": "2023-07-22T21:00:00Z",
+    "sign_of_publication": false,
+    "quantity_of_views": 1
+  }
+},
+{
+  "model": "catalog.blog",
+  "pk": 10,
+  "fields": {
+    "header": "пример1",
+    "slug": "этоурл",
+    "content": "содержимое",
+    "image": "",
+    "date_of_create": "2023-07-22T21:00:00Z",
+    "sign_of_publication": false,
+    "quantity_of_views": 1
+  }
+},
+{
+  "model": "catalog.blog",
+  "pk": 11,
+  "fields": {
+    "header": "Заголовок2",
+    "slug": "человекопонятный 2",
+    "content": "dfhdfhhhhhhhfgjhd",
+    "image": "",
+    "date_of_create": "2023-07-22T21:00:00Z",
+    "sign_of_publication": true,
+    "quantity_of_views": 1
+  }
+},
+{
+  "model": "catalog.blog",
+  "pk": 12,
+  "fields": {
+    "header": "pppp",
+    "slug": "url",
+    "content": "cvhgghfghf",
+    "image": "",
+    "date_of_create": "2023-07-23T21:00:00Z",
+    "sign_of_publication": true,
+    "quantity_of_views": 8
+  }
+},
+{
+  "model": "catalog.blog",
+  "pk": 13,
+  "fields": {
+    "header": "3",
+    "slug": "3",
+    "content": "asdasfhfghfghfghfghfghfhfghfhfghfghfgh",
+    "image": "",
+    "date_of_create": "2023-07-23T21:00:00Z",
+    "sign_of_publication": true,
+    "quantity_of_views": 16
+  }
+},
+{
+  "model": "catalog.blog",
+  "pk": 15,
+  "fields": {
+    "header": "fin",
+    "slug": "fin",
+    "content": "fbcvc",
+    "image": "",
+    "date_of_create": "2023-07-23T21:00:00Z",
+    "sign_of_publication": true,
+    "quantity_of_views": 3
+  }
+},
+{
+  "model": "catalog.blog",
+  "pk": 17,
+  "fields": {
+    "header": "sdfs",
+    "slug": "dfsdf",
+    "content": "fsdfsdf",
+    "image": "",
+    "date_of_create": "2023-07-22T21:00:00Z",
+    "sign_of_publication": true,
+    "quantity_of_views": 0
+  }
+},
+{
+  "model": "catalog.blog",
+  "pk": 18,
+  "fields": {
+    "header": "xxxxxxx",
+    "slug": "none",
+    "content": "qe",
+    "image": "",
+    "date_of_create": "2023-07-23T21:00:00Z",
+    "sign_of_publication": true,
+    "quantity_of_views": 1
+  }
+},
+{
+  "model": "catalog.blog",
+  "pk": 19,
+  "fields": {
+    "header": "rrrr",
+    "slug": "rrrr",
+    "content": "rree",
+    "image": "",
+    "date_of_create": "2023-07-23T21:00:00Z",
+    "sign_of_publication": true,
+    "quantity_of_views": 1
+  }
+},
+{
+  "model": "catalog.blog",
+  "pk": 20,
+  "fields": {
+    "header": "ghfg",
+    "slug": "ghfg",
+    "content": "g",
+    "image": "",
+    "date_of_create": "2023-07-23T21:00:00Z",
+    "sign_of_publication": true,
+    "quantity_of_views": 0
+  }
+},
+{
+  "model": "catalog.version",
+  "pk": 1,
+  "fields": {
+    "product": 8,
+    "version_number": 1.0,
+    "version_name": "fg",
+    "sign_of_current_version": true
+  }
+},
+{
+  "model": "catalog.version",
+  "pk": 2,
+  "fields": {
+    "product": 22,
+    "version_number": 1.0,
+    "version_name": "1",
+    "sign_of_current_version": true
+  }
+},
+{
+  "model": "catalog.version",
+  "pk": 3,
+  "fields": {
+    "product": 22,
+    "version_number": 2.0,
+    "version_name": "2",
+    "sign_of_current_version": true
+  }
+},
+{
+  "model": "catalog.version",
+  "pk": 4,
+  "fields": {
+    "product": 22,
+    "version_number": 3.0,
+    "version_name": "3",
+    "sign_of_current_version": true
+  }
+},
+{
+  "model": "catalog.version",
+  "pk": 5,
+  "fields": {
+    "product": 22,
+    "version_number": 4.0,
+    "version_name": "4",
+    "sign_of_current_version": true
+  }
+},
+{
+  "model": "catalog.version",
+  "pk": 6,
+  "fields": {
+    "product": 22,
+    "version_number": 5.0,
+    "version_name": "5",
+    "sign_of_current_version": true
+  }
+}
+]

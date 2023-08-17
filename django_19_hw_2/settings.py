@@ -11,11 +11,14 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-from email_secret_data import temp
+
+import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -179,12 +182,14 @@ MEDIA_ROOT = BASE_DIR / 'media'
 AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+# Для проверки доступа, аутентификация
 LOGIN_URL = 'catalog:not_authenticated'
 
-EMAIL_HOST = temp.EMAIL_HOST
-EMAIL_PORT = temp.EMAIL_PORT
-EMAIL_HOST_USER = temp.EMAIL_HOST_USER
-EMAIL_HOST_PASSWORD = temp.EMAIL_HOST_PASSWORD
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
 # EMAIL_USE_TLS = temp.EMAIL_USE_TLS
 # EMAIL_USE_SSL = temp.EMAIL_USE_SSL
@@ -193,3 +198,13 @@ EMAIL_USE_SSL = False
 
 SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+CACHE_ENABLED = True
+
+if CACHE_ENABLED:
+    CACHES = {
+        "default": {
+            "BACKEND":  os.getenv('BACKEND'),
+            "LOCATION": os.getenv('LOCATION'),
+            }
+        }

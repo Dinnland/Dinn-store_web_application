@@ -2,83 +2,85 @@
 {% load my_tags %}
 {% load static %}
 {% block content %}
-    <div class="pricing-header px-3 py-3 pt-md-4 pb-md-4 mx-auto text-center">
-        {#        <h1 class="display-4">{{ title }}_блог</h1>#}
-    </div>
-    <div class="col-10">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">
-                    Информация о продукте
-                </h3>
+    {#    <div class="pricing-header px-3 py-3 pt-md-4 pb-md-4 mx-auto text-center">#}
+    {#        <h1 class="display-4">{{ title }}_блог</h1>#}
+    {#    </div>#}
+    <div class="col-12">
+        <div class="col-10">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        Информация о продукте
+                    </h3>
+                </div>
             </div>
-        </div>
 
-        <div class="card-body">
-            <table class="table">
+            <div class="card-body">
+                <table class="table">
 
-                <tr>
-                    <td>Создатель</td>
-                    <td>{{ object.owner|default:'-' }}</td>
-                </tr>
-                <tr>
-                    <td>Наименование</td>
-                    <td>{{ object.name }}</td>
-                </tr>
-                <tr>
-                    <td>Описание</td>
-                    <td>{{ object.description }}</td>
-                </tr>
-                {#            <tr>#}
-                <div class="col-10">
-{#                    <div class="card">#}
+                    <tr>
+                        <td>Создатель</td>
+                        <td>{{ object.owner|default:'-' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Наименование</td>
+                        <td>{{ object.name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Описание</td>
+                        <td>{{ object.description }}</td>
+                    </tr>
+                    {#            <tr>#}
+                    <div class="col-10">
+                        {#                    <div class="card">#}
                         <td>Изображение</td>
                         <td>{{ object.image|default:'Нет своего изображения' }}
-                        <ul class="list-unstyled mt-2 mb-9 text-start m-1">
-                            <ul>
-                                <img class="card-img-top"
-                                     src="{{ object.image|my_media }}"
-                                     alt="Card image cap">
+                            <ul class="list-unstyled mt-2 mb-9 text-start m-1">
+                                <ul>
+                                    <img class="card-img-top"
+                                         src="{{ object.image|my_media }}"
+                                         alt="Card image cap">
+                                </ul>
                             </ul>
-                        </ul></td>
+                        </td>
 
 
-{#                    </div>#}
-                </div>
-                <tr>
-                    <td>Ссылка</td>
-                    <td>{{ object.category }}</td>
-                </tr>
-                <tr>
-                    <td>Цена</td>
-                    <td>{{ object.price }} ₽</td>
-                </tr>
-                <tr>
-                    <td>Дата создания</td>
-                    <td>{{ object.date_of_create }}</td>
-                </tr>
-                <tr>
-                    <td>Дата последнего изменения</td>
-                    {% if object.date_of_change != None %}
-                        <td>{{ object.date_of_change }}</td>
-                    {% else %}
-                        <td>Продукт не менялся</td>
-                    {% endif %}
-                </tr>
-                <tr>
-                    <td>Признак публикации</td>
-                    <td>{{ object.sign_of_publication }}</td>
-                </tr>
-            </table>
-            <a class="btn btn-outline-primary mt-1 mb-2 " href="{% url 'catalog:update_product' object.pk %}">Редактировать
-                продукт</a>
-{#            <a class="btn btn-outline-primary mt-1 mb-2 " href="{% url 'catalog:delete_product' object.pk %}">Удалить#}
-{#                продукт</a>#}
+                        {#                    </div>#}
+                    </div>
+                    <tr>
+                        <td>Ссылка</td>
+                        <td>{{ object.category }}</td>
+                    </tr>
+                    <tr>
+                        <td>Цена</td>
+                        <td>{{ object.price }} ₽</td>
+                    </tr>
+                    <tr>
+                        <td>Дата создания</td>
+                        <td>{{ object.date_of_create }}</td>
+                    </tr>
+                    <tr>
+                        <td>Дата последнего изменения</td>
+                        {% if object.date_of_change != None %}
+                            <td>{{ object.date_of_change }}</td>
+                            {#                            {{ object. }}#}
+                        {% else %}
+                            <td>Продукт не менялся</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Признак публикации</td>
+                        <td>{{ object.sign_of_publication }}</td>
+                    </tr>
+                </table>
+                <a class="btn btn-outline-primary mt-1 mb-2 " href="{% url 'catalog:update_product' object.pk %}">Редактировать
+                    продукт</a>
+                            <a class="btn btn-outline-primary mt-1 mb-2 " href="{% url 'catalog:delete_product' object.pk %}">Удалить
+                                продукт</a>
 
+            </div>
         </div>
-    </div>
-
-    <form method="post" class="row">
+        {#    <form method="post" class="row">#}
         <div class="col-10">
             <div class="card">
                 <div class="card-header">
@@ -86,17 +88,45 @@
                         Информация о версии
                     </h3>
                 </div>
+
                 <div class="card-body">
-                    Информация о версии доступна в форме редактирования продукта
                     <div class="card-body">
-                        {{ formset.management_form }}
-                        {% for form in formset.forms %}
-                            {{ form.as_p }}
-                            <hr>
-                        {% endfor %}
+                        {#                                            {{ formset.management_form }}#}
+                        {#                                            {% for form in formset.forms %}#}
+                        {#                                                {{ form.as_p }}#}
+                        {#                                                <hr>#}
+                        {#                                            {% endfor %}#}
+                        {#                    {% for product in product.product_versions.all %}#}
+
+                        {#                    {% for product in product.product_versions.all %}#}
+                        {##}
+                        {#                        {{ product }}#}
+                        {#                    {% endfor %}#}
+
+                        <ul>
+                            {% for version in object.version_set.all %}
+                                {#                                         {{ form.as_p }}#}
+                                <li>{{ version }}</li>
+                                <hr>
+                                dfsgsdg
+                            {% endfor %}
+                        </ul>
+{#                        <ul>#}
+{#                            {% for version in object.product_versions.all %}#}
+{#                                <li>{{ version }}</li>#}
+{#                                din3#}
+{#                                <hr>#}
+{#                            {% endfor %}#}
+{#                        </ul>#}
+                        <ul>
+                            {% for version in versions %}
+                                <li>{{ version }}</li>
+                                <hr>
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 {% endblock %}

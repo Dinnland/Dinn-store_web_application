@@ -95,7 +95,7 @@ class Version(models.Model):
         return f'{self.product} {self.version_number} {self.version_name} {self.sign_of_current_version}'
 
     def __str__(self):
-        return f'{self.product} {self.version_number} {self.version_name} {self.sign_of_current_version}'
+        return f' {self.version_number} {self.version_name} {self.sign_of_current_version}'
 
     class Meta:
         verbose_name = 'версия ПРОДУКТА'
