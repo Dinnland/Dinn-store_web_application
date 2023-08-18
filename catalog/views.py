@@ -138,17 +138,19 @@ class ProductUpdateView(LoginRequiredMixin, SuccessMessageMixin, PermissionRequi
         context_data = super().get_context_data(**kwargs)
         self.object = super().get_object(queryset)
 
-        # Тут ТУПО убираем для 'moderator' версии продукта из видимости
-        if not self.request.user.groups.filter(name='moderator').exists():
-            # context_data = super().get_context_data(**kwargs)
-            version_formset = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
-            if self.request.method == 'POST':
-                context_data['formset'] = version_formset(self.request.POST, instance=self.object)
-                # return context_data
-            else:
-                context_data['formset'] = version_formset(instance=self.object)
-                # return context_data
-        return context_data
+        # # Тут ТУПО убираем для 'moderator' версии продукта из видимости
+        # if not self.request.user.groups.filter(name='moderator').exists():
+        #     # context_data = super().get_context_data(**kwargs)
+        #     version_formset = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
+        #     if self.request.method == 'POST':
+        #         context_data['formset'] = version_formset(self.request.POST, instance=self.object)
+        #         # return context_data
+        #     else:
+        #         context_data['formset'] = version_formset(instance=self.object)
+        #         # return context_data
+        # return context_data
+
+        return get_del_group_for_versions(self_req=self.request, del_user='moderator', context_data=context_data, self=self)
 
     def form_valid(self, form):
 

@@ -2,7 +2,7 @@
 from django.contrib import auth
 from django.forms import inlineformset_factory
 
-from catalog.forms import ProductUpdateFormModerator, ProductUpdateForm
+from catalog.forms import ProductUpdateFormModerator, ProductUpdateForm, VersionForm
 from catalog.models import *
 from django_19_hw_2 import settings
 from django.core.cache import cache
@@ -46,14 +46,14 @@ def get_filter_user_group(del_group, user):
         form_class = ProductUpdateForm
     return form_class
 
-# def get_del_group_for_versions(user, del_user, _request_method):
-#     """ Тут ТУПО убираем для 'moderator' версии продукта из видимости"""
-#     if not user.groups.filter(name=del_user).exists():
-#         version_formset = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
-#         if _request_method == 'POST':
-#             context_data['formset'] = version_formset(self.request.POST, instance=self.object)
-#             # return context_data
-#         else:
-#             context_data['formset'] = version_formset(instance=self.object)
-#             # return context_data
-#     return context_data
+def get_del_group_for_versions(self_req, del_user, context_data, self):
+    """ Тут ТУПО убираем для 'moderator' версии продукта из видимости"""
+    if not self_req.user.groups.filter(name=del_user).exists():
+        version_formset = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
+        if self_req.method == 'POST':
+            context_data['formset'] = version_formset(self_req.POST, instance=self.object)
+            # return context_data
+        else:
+            context_data['formset'] = version_formset(instance=self.object)
+            # return context_data
+    return context_data
