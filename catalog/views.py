@@ -65,24 +65,8 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         """КЭШирование для вывода версий"""
         context_data = super().get_context_data(**kwargs)
-        if settings.CACHE_ENABLED:
-            key = f'version_list_{self.object.pk}'
-            version_list = cache.get(key)
-            if version_list is None:
-                version_list = self.object.product_versions.all()
-                cache.set(key, version_list)
-        else:
-            version_list = self.object.product_versions.all()
-        context_data['versions'] = version_list
+        context_data['versions'] = get_cashed_versions_for_product(self.object.pk)
         return context_data
-
-
-        # # # # # # # # # # # # # # # # # # # # # #
-        # context_data = super().get_context_data(**kwargs)
-        # version_listt = self.object.product_versions.all()
-        # key = f'version_list_{self.object.pk}'
-        # pk = self.object.pk
-        # context_data['versions'] = get_cashed_versions_for_product(object_pk=self.object.pk)
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
@@ -104,13 +88,11 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 
         return super().form_valid(form)
 
-    # def get_context_data(self, **kwargs):
-    #     context_data = super().get_context_data(**kwargs)
-    #     # version_listt = self.object.product_versions.all()
-    #     # key = f'version_list_{self.object.pk}'
-    #     # pk = self.object.pk
-    #     context_data['categoryes'] = get_cashed_categories_for_product(self.object.pk)
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
 
+        context_data['category_list'] = get_cashed_categories_for_product()
+        return context_data
 
 
 class ProductUpdateView(LoginRequiredMixin, SuccessMessageMixin, PermissionRequiredMixin, UpdateView):
@@ -122,13 +104,14 @@ class ProductUpdateView(LoginRequiredMixin, SuccessMessageMixin, PermissionRequi
         """Тут в зависимости от группы юзера выводятся разные формы продукта"""
         self.object = super().get_object(queryset)
         # if self.object.owner == self.request.user:
-
-        if self.request.user.groups.filter(name='moderator').exists():
-            form_class = ProductUpdateFormModerator
-            return form_class
-        else:
-            form_class = ProductUpdateForm
-            return form_class
+        # if self.request.user.groups.filter(name='moderator').exists():
+        #     form_class = ProductUpdateFormModerator
+        #     return form_class
+        # else:
+        #     form_class = ProductUpdateForm
+        #     return form_class
+        form_class = get_filter_user_group(del_group='moderator', user=self.request.user)
+        return form_class
 
     def get_object(self, queryset=None):
         """проверка: владелец ли хочет редактнуть объект"""
@@ -154,6 +137,7 @@ class ProductUpdateView(LoginRequiredMixin, SuccessMessageMixin, PermissionRequi
     def get_context_data(self,  queryset=None, **kwargs):
         context_data = super().get_context_data(**kwargs)
         self.object = super().get_object(queryset)
+
         # Тут ТУПО убираем для 'moderator' версии продукта из видимости
         if not self.request.user.groups.filter(name='moderator').exists():
             # context_data = super().get_context_data(**kwargs)
@@ -164,7 +148,6 @@ class ProductUpdateView(LoginRequiredMixin, SuccessMessageMixin, PermissionRequi
             else:
                 context_data['formset'] = version_formset(instance=self.object)
                 # return context_data
-            #-----------instance=self.object - для редакт, для созд не надо
         return context_data
 
     def form_valid(self, form):
@@ -254,7 +237,7 @@ class BlogUpdateView(UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('catalog:viewblog', args=[self.kwargs.get('pk')])
+        return reverse('catalog:viewblog')
 
 
 class BlogDeleteView(DeleteView):

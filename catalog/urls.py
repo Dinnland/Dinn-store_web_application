@@ -15,6 +15,8 @@ urlpatterns = [
     path('contacts/', index_contacts, name='contacts'),
     path('base/', base),
     path('viewproduct/<int:pk>', cache_page(60)(ProductDetailView.as_view()), name='view'),
+    # path('viewproduct/<int:pk>', ProductDetailView.as_view(), name='view'),
+
     path('createproduct/', ProductCreateView.as_view(), name='create_product'),
     path('updateproduct/<int:pk>/', ProductUpdateView.as_view(), name='update_product'),
     path('deleteproduct/<int:pk>/', ProductDeleteView.as_view(), name='delete_product'),
