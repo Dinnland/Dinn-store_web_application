@@ -85,12 +85,10 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         self.object = form.save()
         self.object.owner = self.request.user
         self.object.save()
-
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-
         context_data['category_list'] = get_cashed_categories_for_product()
         return context_data
 
@@ -116,14 +114,16 @@ class ProductUpdateView(LoginRequiredMixin, SuccessMessageMixin, PermissionRequi
     def get_object(self, queryset=None):
         """проверка: владелец ли хочет редактнуть объект"""
         self.object = super().get_object(queryset)
-        if self.object.owner != self.request.user:
-            # return  redirect(reverse('catalog:no_rights'))
-            raise Http404
-        else:
+        if self.request.user.groups.filter(name='moderator').exists():
             return self.object
+        else:
+            if self.object.owner != self.request.user:
+                # return  redirect(reverse('catalog:no_rights'))
+                raise Http404
+            else:
+                return self.object
 
-    # ограничение доступа анонимных пользователей
-    # 19 Уведомление для неавторизованных пользователей
+    # ограничение доступа анонимных пользователей # 19 Уведомление для неавторизованных пользователе
     login_url = 'catalog:not_authenticated'
     permission_required = 'catalog.change_product'
 
@@ -170,8 +170,7 @@ class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView)
     # fields = ('header', 'content', 'image')
     success_url = reverse_lazy('catalog:home')
 
-    # ограничение доступа анонимных пользователей
-    # 19 Уведомление для неавторизованных пользователей
+    # ограничение доступа анонимных пользователей # 19 Уведомление для неавторизованных пользователей
     login_url = 'catalog:not_authenticated'
     permission_required = 'catalog.delete_product'
     success_message = 'Материал был успешно Удален'

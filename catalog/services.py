@@ -52,8 +52,7 @@ def get_del_group_for_versions(self_req, del_user, context_data, self):
         version_formset = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
         if self_req.method == 'POST':
             context_data['formset'] = version_formset(self_req.POST, instance=self.object)
-            # return context_data
         else:
             context_data['formset'] = version_formset(instance=self.object)
-            # return context_data
     return context_data
+

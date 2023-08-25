@@ -91,34 +91,14 @@
 
                 <div class="card-body">
                     <div class="card-body">
-                        {#                                            {{ formset.management_form }}#}
-                        {#                                            {% for form in formset.forms %}#}
-                        {#                                                {{ form.as_p }}#}
-                        {#                                                <hr>#}
-                        {#                                            {% endfor %}#}
-                        {#                    {% for product in product.product_versions.all %}#}
-
-                        {#                    {% for product in product.product_versions.all %}#}
-                        {##}
-                        {#                        {{ product }}#}
-                        {#                    {% endfor %}#}
 
                         <ul>
                             {% for version in object.version_set.all %}
-                                {#                                         {{ form.as_p }}#}
                                 <li>{{ version }}</li>
                                 <hr>
                                 dfsgsdg
                             {% endfor %}
-                        </ul>
-{#                        <ul>#}
-{#                            {% for version in object.product_versions.all %}#}
-{#                                <li>{{ version }}</li>#}
-{#                                din3#}
-{#                                <hr>#}
-{#                            {% endfor %}#}
-{#                        </ul>#}
-                        <ul>
+
                             {% for version in versions %}
                                 <li>{{ version }}</li>
                                 <hr>
